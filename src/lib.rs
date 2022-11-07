@@ -1,29 +1,43 @@
 use anyhow::{anyhow, Result};
-use constants::{OBJECT, PLAYING};
-use raylib::prelude::*;
+use eframe::egui::{self, plot::{Plot, Value}};
 
-pub mod constants;
+
+pub mod conf;
 pub mod object;
 
-pub fn update(rl: &mut RaylibHandle, thread: &RaylibThread) -> Result<()> {
-    let mut drawing_handle = rl.begin_drawing(thread);
+pub struct Symulacja {
+    playing: bool,
+    x: i32,
+    y: i32,
+    yv: i32,
+    mass: i32,
+    gravity: i32
+}
 
-    drawing_handle.clear_background(Color::WHITE);
-    drawing_handle.draw_text("Hello, world!", 10, 10, 20, Color::BLACK);
+impl Default for Symulacja {
+    fn default() -> Self {
+        Self {
+            playing: false,
+            x: 0,
+            y: 0,
+            yv: 0,
+            mass: 1,
+            gravity: 10
+        }
+    }
+}
 
-    let mut playing = match PLAYING.lock() {
-        Ok(o) => o,
-        Err(_) => return Err(anyhow!("Error locking PLAYING mutex!")),
-    };
+impl eframe::App for Symulacja {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        let object = (0..1000).map(|i| {
+            self.y = self.yv * i;
+            self.yv = self.mass * self.gravity;
 
-    drawing_handle.gui_check_box(rrect(10, 10, 60, 60), Some(rstr!("Playing")));
+            Value // todo: plotting
+        });
 
-    let mut obj = match OBJECT.lock() {
-        Ok(o) => o,
-        Err(_) => return Err(anyhow!("Error locking OBJECT mutex!")),
-    };
-
-    obj.update(&mut drawing_handle);
-
-    Ok(())
+        egui::CentralPanel::default().show(ctx, |ui| {
+            todo!()
+        });
+    }
 }
