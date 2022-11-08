@@ -50,7 +50,7 @@ impl CollisionBox {
     }
 
     pub fn update(&mut self, _dh: &mut RaylibDrawHandle) -> Result<()> {
-        self.y += self.yvel;
+        self.y -= self.yvel;
         self.yvel += self.gravity * self.mass;
         self.x += 6;
 
