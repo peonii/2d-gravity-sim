@@ -1,11 +1,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] // hide console window on Windows in release
 
-use anyhow::Result;
-use eframe::{NativeOptions, egui};
-use sym_swobodne::Symulacja;
+use eframe::{egui, NativeOptions};
+use sym_swobodne::runner::Symulacja;
 
-
-fn main() -> Result<()> {
+fn main() {
     let opts = NativeOptions {
         decorated: false,
         transparent: true,
@@ -13,7 +11,9 @@ fn main() -> Result<()> {
         ..Default::default()
     };
 
-    eframe::run_native("Symulacja", opts, Box::new(|_cc| Box::new(Symulacja::default())));
-
-    Ok(())
+    eframe::run_native(
+        "Symulacja",
+        opts,
+        Box::new(|_cc| Box::new(Symulacja::default())),
+    );
 }
