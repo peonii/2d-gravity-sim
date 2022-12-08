@@ -14,6 +14,6 @@ fn main() {
     eframe::run_native(
         "Symulacja",
         opts,
-        Box::new(|_cc| Box::new(Symulacja::default())),
+        Box::new(|_cc| Box::new(Symulacja::new())),
     );
 }
