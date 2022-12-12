@@ -3,6 +3,13 @@ name = "sym_swobodne"
 version = "0.2.0"
 edition = "2021"
 
+[profile.release]
+lto = true
+opt-level = 3
+strip = "symbols"
+panic = "abort"
+
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
