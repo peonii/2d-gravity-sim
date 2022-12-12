@@ -15,3 +15,15 @@ macro_rules! line_from {
         .name($name)
     };
 }
+
+#[macro_export]
+macro_rules! input {
+    ($ui:ident : $obj:ident @ $range:expr => $name:expr) => {
+        $ui.add(Label::new(RichText::new($name)).size(20.0));
+        $ui.add(Slider::new(&mut $obj, $range));
+    };
+    (clamp $ui:ident : $obj:ident @ $range:expr => $name:expr) => {
+        $ui.add(Label::new(RichText::new($name).size(20.0)));
+        $ui.add(Slider::new(&mut $obj, $range).clamp_to_range(true));
+    };
+}
